@@ -1,7 +1,6 @@
 import { BillingAddress } from '../../models/billing-address.model';
 
 export class CheckoutAddressComponent {
-    private readonly nodeBillingStep = '#snipcart-billingaddress-form';
     private readonly inputName = '#snip-name';
     private readonly inputCompany = '#snip-company';
     private readonly inputAddressFirst = '#snip-address1';
@@ -16,6 +15,7 @@ export class CheckoutAddressComponent {
 
     fillInAddress(address: BillingAddress) {
         const { name, companyName, address1, address2, city, country, email, phone, state, zip } = address;
+
         cy.clearAndType(this.inputName, name)
             .clearAndType(this.inputCompany, companyName)
             .clearAndType(this.inputAddressFirst, address1)

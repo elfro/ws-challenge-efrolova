@@ -4,8 +4,6 @@ import { getNumberFromString } from '../helper';
 
 export class CartPage {
 
-    private readonly nodeMainCartContent = '#snipcart-main-content';
-
     private readonly cartSubtotal = '#snipcart-amount';
     private readonly trCartItem = '.snip-table__item';
     private readonly itemName = '.snip-product__name';
@@ -19,7 +17,7 @@ export class CartPage {
         const items: CartItem[] = [];
 
         cy.get(this.trCartItem).each($item => {
-            const item: CartItem = { title: '', price: NaN, qty: NaN, totalPrice: NaN }
+            const item: CartItem = {} as CartItem;
 
             cy.wrap($item).within(() => {
                 cy.get(this.itemName).then($el => item.title = $el.text());
