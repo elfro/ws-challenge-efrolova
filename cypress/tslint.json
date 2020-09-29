@@ -1,0 +1,17 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "only-arrow-functions": false,
+    "newline-per-chained-call": false,
+    "no-invalid-this": false,
+    "max-line-length": [
+      true,
+      160
+    ],
+    "object-curly-spacing": true,
+    "no-namespace": false
+  }
+}
