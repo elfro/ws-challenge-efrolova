@@ -1,3 +1,5 @@
 {
-  "baseUrl": "https://friendly-jepsen-665dc7.netlify.app"
+  "baseUrl": "https://friendly-jepsen-665dc7.netlify.app",
+  "viewportWidth": 1920,
+  "viewportHeight": 1080
 }

@@ -1,5 +1,4 @@
 {
-  "defaultSeverity": "error",
   "extends": [
     "tslint:recommended"
   ],
@@ -12,6 +11,7 @@
       160
     ],
     "object-curly-spacing": true,
-    "no-namespace": false
+    "no-namespace": false,
+    "whitespace": [true, "check-module"]
   }
 }

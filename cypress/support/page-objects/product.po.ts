@@ -1,6 +1,6 @@
 import Chainable = Cypress.Chainable;
 import { Product } from "../models/product.model";
-import { getPriceFromString } from "../helper";
+import { getNumberFromString } from "../helper";
 
 export class ProductPage {
     readonly url = '/products/product_2/';
@@ -21,7 +21,7 @@ export class ProductPage {
         const product: Product = { title: '', price: NaN };
 
         cy.get(this.title).then($el => product.title = $el.text());
-        cy.get(this.price).then($el => product.price = getPriceFromString($el.text()));
+        cy.get(this.price).then($el => product.price = getNumberFromString($el.text()));
 
         return cy.wrap(product);
     }

@@ -1,6 +1,6 @@
 import Chainable = Cypress.Chainable;
-import {CartItem} from "../models/cart.model";
-import {getPriceFromString} from "../helper";
+import { CartItem } from '../models/cart.model';
+import { getNumberFromString } from '../helper';
 
 export class CartPage {
 
@@ -13,19 +13,19 @@ export class CartPage {
     private readonly itemUnitPrice = '[data-bind="unitPrice"]';
     private readonly itemTotalPrice = '[data-bind="totalPrice"]';
 
-    private readonly buttonNextStep = '.js-next.snip-btn';
+    private readonly btnNextStep = '.js-next.snip-btn';
 
     getCartItems(): Chainable<CartItem[]> {
         const items: CartItem[] = [];
 
         cy.get(this.trCartItem).each($item => {
-            const item: CartItem = {title: '', price: NaN, qty: NaN, totalPrice: NaN}
+            const item: CartItem = { title: '', price: NaN, qty: NaN, totalPrice: NaN }
 
             cy.wrap($item).within(() => {
                 cy.get(this.itemName).then($el => item.title = $el.text());
                 cy.get(this.itemQty).then($el => item.qty = +$el.text());
-                cy.get(this.itemUnitPrice).then($el => item.price = getPriceFromString($el.text()));
-                cy.get(this.itemTotalPrice).then($el => item.totalPrice = getPriceFromString($el.text()));
+                cy.get(this.itemUnitPrice).then($el => item.price = getNumberFromString($el.text()));
+                cy.get(this.itemTotalPrice).then($el => item.totalPrice = getNumberFromString($el.text()));
             });
 
             items.push(item);
@@ -35,6 +35,6 @@ export class CartPage {
     }
 
     goToNextStep() {
-        cy.get(this.buttonNextStep).click();
+        cy.get(this.btnNextStep).click();
     }
 }

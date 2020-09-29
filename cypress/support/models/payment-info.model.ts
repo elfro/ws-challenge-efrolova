@@ -2,8 +2,8 @@ export interface PaymentInfo {
     paymentMethod: string,
     cardName: string,
     cardType: string,
-    cardNumber: number,
+    cardNumber: string,
     cardCVC: number,
     expirationYear: number,
-    expirationMonth: number
+    expirationMonth: string
 }
