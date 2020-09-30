@@ -1,6 +1,6 @@
-import { BillingAddress } from '../../models/billing-address.model';
+import { BillingAddress } from '../models/billing-address.model';
 
-export class CheckoutAddressComponent {
+export class CheckoutAddressPage {
     private readonly inputName = '#snip-name';
     private readonly inputCompany = '#snip-company';
     private readonly inputAddressFirst = '#snip-address1';

@@ -1,6 +1,6 @@
-import { PaymentInfo } from '../../models/payment-info.model';
+import { PaymentInfo } from '../models/payment-info.model';
 
-export class CheckoutPaymentComponent {
+export class CheckoutPaymentPage {
     private readonly selectCardType = '#snip-type';
     private readonly inputOwnerName = '#snip-ownerName';
     private readonly inputCardNumber = '#snip-number';

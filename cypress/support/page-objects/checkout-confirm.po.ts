@@ -1,18 +1,17 @@
 import Chainable = Cypress.Chainable;
-import { BillingAddress } from '../../models/billing-address.model';
-import { PaymentInfo } from '../../models/payment-info.model';
-import { CartPage } from '../cart-item.po';
-import { CartItem } from '../../models/cart.model';
-import { getSubstringAfterSeparator } from '../../helper';
+import { CartPage } from './cart.po';
+import { BillingAddress } from '../models/billing-address.model';
+import { PaymentInfo } from '../models/payment-info.model';
+import { CartItem } from '../models/cart.model';
+import { getSubstringAfterSeparator } from '../helper';
 
-export class CheckoutConfirmComponent {
-    private readonly btnPlaceOrder = '.js-submit';
-
-    // Confirm
+export class CheckoutConfirmPage {
+    private readonly payEndPointUrl = '**/api/cart/*/pay';
     private readonly columnContent = '.snip-static__content';
     private readonly indexAddressColumn = 0;
     private readonly indexPaymentInfoColumn = 1;
     private readonly columnRow = 'p';
+    private readonly btnPlaceOrder = '.js-submit';
 
     constructor(private itemsComponent = new CartPage()) {
     }
@@ -39,7 +38,7 @@ export class CheckoutConfirmComponent {
         return cy.wrap(address);
     }
 
-    // Payment method = 1, Name on card = 2, Card type = 3, Card number = 4
+    // payment method = 1, Name on card = 2, Card type = 3, Card number = 4
     getPaymentInfo(): Chainable<PaymentInfo> {
         const paymentInfo: PaymentInfo = {} as PaymentInfo;
         cy.get(this.columnContent).eq(this.indexPaymentInfoColumn).within(() => {
@@ -66,7 +65,7 @@ export class CheckoutConfirmComponent {
         cy.server();
         cy.route({
             method: 'POST',
-            url: '**/api/cart/*/pay',
+            url: this.payEndPointUrl,
         }).as('postOrder');
     }
 }

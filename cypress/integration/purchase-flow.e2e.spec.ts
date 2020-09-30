@@ -1,28 +1,33 @@
+import { HomePage } from '../support/page-objects/home.po';
 import { ProductPage } from '../support/page-objects/product.po';
-import { CartPage } from '../support/page-objects/cart-item.po';
-import { CheckoutPage } from '../support/page-objects/checkout.po';
+import { CartPage } from '../support/page-objects/cart.po';
 import { CartItem } from '../support/models/cart.model';
+import { CheckoutAddressPage } from '../support/page-objects/checkout-address.po';
+import { CheckoutPaymentPage } from '../support/page-objects/checkout-payment.po';
+import { CheckoutConfirmPage } from '../support/page-objects/checkout-confirm.po';
 import { billingAddressData } from '../fixtures/billing-address.data';
 import { paymentMethodData } from '../fixtures/payment-method.data';
 
-describe('Full flow of adding a product to the card and submitting order', function () {
+describe('The whole flow of adding a product to the card and submitting order', function () {
+    const homePage = new HomePage();
     const productPage = new ProductPage();
     const cartPage = new CartPage();
-    const checkoutPage = new CheckoutPage();
+    const billingAddressPage = new CheckoutAddressPage();
+    const paymentInfoPage = new CheckoutPaymentPage();
+    const confirmPage = new CheckoutConfirmPage();
 
-    before(function () {
-        productPage.openPage();
-    })
-
-    it('should open the home page, add item to the cart, pass checkout and submit an order successfully', function () {
+    it('should open the home page, go to details product page, add item to the cart, pass checkout and submit an order successfully', function () {
         const billing = billingAddressData;
         const payment = paymentMethodData;
         const expectedPaymentInfo = {
             ...Cypress._.pick(payment, ['paymentMethod', 'cardName', 'cardType']),
             cardNumber: payment.cardNumber.substr(-4, 4)
         };
-
         const initialProduct: CartItem = {} as CartItem;
+
+        homePage.openPage();
+        homePage.switchToNextWidgetScene();
+        homePage.clickGoToProductBtn();
         productPage.getProductInfo().then(product => {
             initialProduct.title = product.title;
             initialProduct.qty = 1;
@@ -34,16 +39,15 @@ describe('Full flow of adding a product to the card and submitting order', funct
         cartPage.getCartItems().should('include.deep.ordered.members', [initialProduct]);
 
         cartPage.goToNextStep();
-        checkoutPage.billingAddress.fillInAddress(billing);
-        checkoutPage.billingAddress.goToNextStep();
-        checkoutPage.paymentInfo.fillInPaymentInfo(payment);
-        checkoutPage.paymentInfo.goToNextStep();
+        billingAddressPage.fillInAddress(billing);
+        billingAddressPage.goToNextStep();
+        paymentInfoPage.fillInPaymentInfo(payment);
+        paymentInfoPage.goToNextStep();
 
-        checkoutPage.confirm.getBillingAddressInfo().should('include', billing);
-        checkoutPage.confirm.getPaymentInfo().should('include', expectedPaymentInfo);
-        checkoutPage.confirm.getItemsInfo().should('include.deep.ordered.members', [initialProduct]);
-
-        checkoutPage.confirm.placeOrder().should(({ requestBody, responseBody }) => {
+        confirmPage.getBillingAddressInfo().should('include', billing);
+        confirmPage.getPaymentInfo().should('include', expectedPaymentInfo);
+        confirmPage.getItemsInfo().should('include.deep.ordered.members', [initialProduct]);
+        confirmPage.placeOrder().should(({ requestBody, responseBody }) => {
             expect(requestBody.card).contain({
                 number: payment.cardNumber,
                 cvc: payment.cardCVC.toString(),

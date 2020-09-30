@@ -1,5 +1,11 @@
 {
   "baseUrl": "https://friendly-jepsen-665dc7.netlify.app",
   "viewportWidth": 1920,
-  "viewportHeight": 1080
+  "viewportHeight": 1080,
+  "video": false,
+  "screenshotsFolder": "./cypress/snapshots/actual",
+  "trashAssetsBeforeRuns": true,
+  "env": {
+    "failSilently": false
+  }
 }

@@ -4,7 +4,6 @@ import { getNumberFromString } from '../helper';
 
 export class CartPage {
 
-    private readonly cartSubtotal = '#snipcart-amount';
     private readonly trCartItem = '.snip-table__item';
     private readonly itemName = '.snip-product__name';
     private readonly itemQty = '.snip-quantity-trigger__text';

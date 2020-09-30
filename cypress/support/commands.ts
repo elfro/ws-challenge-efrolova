@@ -2,7 +2,6 @@ import Chainable = Cypress.Chainable;
 
 declare namespace Cypress {
     interface Chainable {
-
         /**
          * Clear the value of an input and then enter a new one
          * @param { string } selector - Selector of input
@@ -30,4 +29,4 @@ Cypress.Commands.add('clearAndType', function (selector: string, value: string):
 });
 Cypress.Commands.add('selectValue', function (selector: string, value: string): Chainable {
     return cy.get(selector).select(value);
-})
+});

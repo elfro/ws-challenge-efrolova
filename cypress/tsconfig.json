@@ -2,11 +2,13 @@
   "extends":  "../tsconfig.json",
   "compilerOptions": {
     "lib": ["es5", "dom", "es2015", "esnext"],
-    "types": ["cypress", "faker"],
+    "types": ["cypress", "faker", "node"],
+    "typeRoots": [ "./types", "../node_modules/@types"],
     "noImplicitAny": false
   },
   "include": [
     "../node_modules/cypress",
+    "../node_modules/@applitools",
     "./**/*.ts"
   ]
 }
